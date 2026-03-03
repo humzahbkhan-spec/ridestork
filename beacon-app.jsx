@@ -25,9 +25,9 @@ const css = `
     --ink: #1A1A17;
     --ink-soft: #6B6960;
     --ink-faint: #A8A49B;
-    --accent: #E8553D;
-    --accent-soft: #FFF0ED;
-    --accent-hover: #D4432C;
+    --accent: #E07B3C;
+    --accent-soft: #FFF3EB;
+    --accent-hover: #CC6A2E;
     --green: #2D8A56;
     --green-soft: #E8F5ED;
     --blue: #3B6FD4;
@@ -63,7 +63,7 @@ const css = `
     flex-direction: column;
     justify-content: space-between;
     padding: 60px 28px 40px;
-    background: var(--ink);
+    background: linear-gradient(170deg, #EDE8DF 0%, #E2DCD2 100%);
     position: relative;
     overflow: hidden;
   }
@@ -75,7 +75,7 @@ const css = `
     right: -40%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(232,85,61,0.25) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(232,133,61,0.12) 0%, transparent 65%);
     pointer-events: none;
   }
 
@@ -86,37 +86,37 @@ const css = `
     left: -30%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(232,85,61,0.12) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(100,150,200,0.08) 0%, transparent 65%);
     pointer-events: none;
   }
 
   .auth-brand {
     position: relative;
     z-index: 1;
+    text-align: center;
   }
 
   .auth-brand-icon {
-    width: 96px;
-    height: 96px;
-    margin-bottom: 32px;
+    width: 200px;
+    height: 200px;
+    margin: 24px auto 0;
+    border-radius: 50%;
+    overflow: hidden;
   }
 
   .auth-brand-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  @keyframes pulse-ring {
-    0%, 100% { box-shadow: 0 0 0 8px rgba(232,85,61,0.15), 0 0 0 20px rgba(232,85,61,0.07); }
-    50% { box-shadow: 0 0 0 12px rgba(232,85,61,0.2), 0 0 0 28px rgba(232,85,61,0.05); }
+    width: 135%;
+    height: 135%;
+    object-fit: cover;
+    object-position: center center;
+    margin: -17.5% 0 0 -17.5%;
   }
 
   .auth-title {
     font-family: 'Fraunces', serif;
     font-size: 48px;
     font-weight: 800;
-    color: #FFFFFF;
+    color: var(--ink);
     line-height: 1.05;
     margin-bottom: 16px;
     letter-spacing: -1px;
@@ -124,9 +124,10 @@ const css = `
 
   .auth-subtitle {
     font-size: 17px;
-    color: rgba(255,255,255,0.5);
+    color: var(--ink-soft);
     line-height: 1.5;
     max-width: 300px;
+    margin: 0 auto;
     font-weight: 300;
   }
 
@@ -146,18 +147,17 @@ const css = `
     width: 100%;
     padding: 18px 20px;
     border-radius: var(--radius);
-    border: 1.5px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.06);
-    color: #fff;
+    border: 1.5px solid var(--surface-alt);
+    background: var(--surface);
+    color: var(--ink);
     font-size: 16px;
     font-family: 'DM Sans', sans-serif;
     outline: none;
     transition: var(--transition);
-    backdrop-filter: blur(10px);
   }
 
-  .auth-input::placeholder { color: rgba(255,255,255,0.3); }
-  .auth-input:focus { border-color: var(--accent); background: rgba(255,255,255,0.1); }
+  .auth-input::placeholder { color: var(--ink-faint); }
+  .auth-input:focus { border-color: var(--accent); }
 
   .auth-btn {
     width: 100%;
@@ -180,7 +180,7 @@ const css = `
   .auth-terms {
     text-align: center;
     font-size: 12px;
-    color: rgba(255,255,255,0.3);
+    color: var(--ink-faint);
     margin-top: 4px;
   }
 
@@ -859,13 +859,13 @@ function AuthScreen({ onLogin }) {
   return (
     <div className="auth-screen">
       <div className="auth-brand">
-        <div className="auth-brand-icon">
-          <img src="/logo.png" alt="RideStork" />
-        </div>
         <h1 className="auth-title">RideStork</h1>
         <p className="auth-subtitle">
           Find students heading your way. Split rides, save money, travel together.
         </p>
+        <div className="auth-brand-icon">
+          <img src="/logo.png" alt="RideStork" />
+        </div>
       </div>
 
       <div className="auth-form">
@@ -885,7 +885,7 @@ function AuthScreen({ onLogin }) {
         >
           Get Started
         </button>
-        <p className="auth-terms">.edu email required — your campus, your rides</p>
+        <p className="auth-terms">.edu email required</p>
       </div>
     </div>
   );
