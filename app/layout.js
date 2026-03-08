@@ -1,3 +1,5 @@
+import "@/styles/app.css";
+
 export const metadata = {
   title: "RideStork – Split Rides with Students",
   description: "Find students heading your way. Split rides, save money, travel together.",
@@ -12,7 +14,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, padding: 0 }}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
