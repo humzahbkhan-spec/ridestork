@@ -7,7 +7,7 @@ export default function BottomNav({ screen, onNavigate, onPost }) {
         className={`nav-item ${screen === "feed" ? "active" : ""}`}
         onClick={() => onNavigate("feed")}
       >
-        <span className="nav-icon">🚗</span>
+        <span className="nav-icon">🚘</span>
         <span className="nav-label">Feed</span>
       </button>
       <button className="nav-fab" onClick={onPost}>
