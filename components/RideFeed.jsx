@@ -1,16 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import RideCard from "./RideCard";
 import RideDetailModal from "./RideDetailModal";
 
 const DESTINATIONS = ["All", "SFO", "SJC", "OAK"];
 
+function getDateFilters() {
+  const filters = ["All Dates"];
+  const today = new Date();
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() + i);
+    filters.push(d.toLocaleDateString("en-US", { month: "short", day: "numeric" }));
+  }
+  return filters;
+}
+
 export default function RideFeed() {
   const [rides, setRides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterDest, setFilterDest] = useState("All");
+  const [filterDate, setFilterDate] = useState("All Dates");
   const [selectedRide, setSelectedRide] = useState(null);
+
+  const dateFilters = useMemo(() => getDateFilters(), []);
 
   const fetchRides = async () => {
     try {
@@ -34,6 +48,10 @@ export default function RideFeed() {
     if (filterDest !== "All" && r.airport_code !== filterDest) {
       return false;
     }
+    if (filterDate !== "All Dates") {
+      const rideDate = new Date(r.departure_at).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      if (rideDate !== filterDate) return false;
+    }
     return true;
   });
 
@@ -45,6 +63,15 @@ export default function RideFeed() {
             key={d}
             className={`filter-chip ${filterDest === d ? "active" : ""}`}
             onClick={() => setFilterDest(d)}
+          >
+            {d}
+          </button>
+        ))}
+        {dateFilters.map((d) => (
+          <button
+            key={d}
+            className={`filter-chip ${filterDate === d ? "active" : ""}`}
+            onClick={() => setFilterDate(d)}
           >
             {d}
           </button>

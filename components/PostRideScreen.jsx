@@ -6,8 +6,6 @@ import { useAuth } from "./AuthProvider";
 const FLEX_OPTIONS = [
   { label: "±30min", value: 30 },
   { label: "±1hr", value: 60 },
-  { label: "±2hr", value: 120 },
-  { label: "Exact time", value: 0 },
 ];
 
 export default function PostRideScreen({ onBack, onPost }) {
