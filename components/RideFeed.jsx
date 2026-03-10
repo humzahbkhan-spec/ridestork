@@ -42,6 +42,8 @@ export default function RideFeed() {
 
   useEffect(() => {
     fetchRides();
+    const interval = setInterval(fetchRides, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const filteredRides = rides.filter((r) => {

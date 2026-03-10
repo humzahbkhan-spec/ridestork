@@ -127,7 +127,7 @@ export default function RideDetailModal({ ride, onClose }) {
               ? "Ride is full"
               : requestStatus === "loading"
                 ? "Requesting..."
-                : `Request to Join · Split ~$${Math.round(45 / (seatsAvail + 1))}/person`}
+                : "Request to Split"}
           </button>
         )}
 
