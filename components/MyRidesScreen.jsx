@@ -99,6 +99,7 @@ function RequestCard({ req, rideId, onAction }) {
 
 function PostedRideCard({ ride, onUpdate }) {
   const [expanded, setExpanded] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
   const requests = ride.ride_requests || [];
   const pendingCount = requests.filter((r) => r.status === "pending").length;
   const approvedCount = requests.filter((r) => r.status === "approved").length;
@@ -152,6 +153,36 @@ function PostedRideCard({ ride, onUpdate }) {
             <RequestCard key={req.id} req={req} rideId={ride.id} onAction={onUpdate} />
           ))}
         </div>
+      )}
+
+      {ride.status === "open" && (
+        <button
+          onClick={async () => {
+            if (!confirm("Cancel this ride? This can't be undone.")) return;
+            setCancelling(true);
+            try {
+              const res = await fetch(`/api/rides/${ride.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: "cancelled" }),
+              });
+              if (res.ok) onUpdate();
+              else alert("Failed to cancel ride");
+            } catch {
+              alert("Something went wrong");
+            } finally {
+              setCancelling(false);
+            }
+          }}
+          disabled={cancelling}
+          style={{
+            marginTop: 12, background: "none", border: "none", cursor: "pointer",
+            fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
+            color: "#D44", padding: 0,
+          }}
+        >
+          {cancelling ? "Cancelling..." : "Cancel Ride"}
+        </button>
       )}
     </div>
   );
