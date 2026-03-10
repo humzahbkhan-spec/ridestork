@@ -1,6 +1,6 @@
 "use client";
 
-export default function BottomNav({ screen, onNavigate, onPost }) {
+export default function BottomNav({ screen, onNavigate, onPost, pendingCount = 0 }) {
   return (
     <div className="bottom-nav">
       <button
@@ -18,9 +18,13 @@ export default function BottomNav({ screen, onNavigate, onPost }) {
       <button
         className={`nav-item ${screen === "rides" ? "active" : ""}`}
         onClick={() => onNavigate("rides")}
+        style={{ position: "relative" }}
       >
         <span className="nav-icon">🤠</span>
         <span className="nav-label">My Rides</span>
+        {pendingCount > 0 && (
+          <span className="nav-badge">{pendingCount}</span>
+        )}
       </button>
     </div>
   );
