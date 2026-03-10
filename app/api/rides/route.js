@@ -11,7 +11,7 @@ export async function GET() {
   const { data, error } = await supabase
     .from("ride_feed")
     .select("*")
-    .eq("status", "open")
+    .in("status", ["open", "full"])
     .order("departure_at", { ascending: true });
 
   if (error) {
