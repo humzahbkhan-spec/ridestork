@@ -23,6 +23,35 @@ export default function AuthProvider({ children }) {
   const supabase = createClient();
 
   useEffect(() => {
+    // Handle OAuth callback client-side (fixes mobile browsers)
+    const handleOAuthCallback = async () => {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
+      const authError = url.searchParams.get("auth_error");
+
+      if (authError === "domain") {
+        // Non-Stanford domain was rejected by server callback
+        window.history.replaceState({}, "", "/");
+        return;
+      }
+
+      if (code) {
+        // Exchange the code for a session client-side
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (!error) {
+          // Check domain enforcement
+          const { data: { user: authUser } } = await supabase.auth.getUser();
+          if (authUser && !authUser.email?.endsWith("@stanford.edu")) {
+            await supabase.auth.signOut();
+          }
+        }
+        // Clean URL
+        window.history.replaceState({}, "", "/");
+      }
+    };
+
+    handleOAuthCallback();
+
     // Get initial session
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user);

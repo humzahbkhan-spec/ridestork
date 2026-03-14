@@ -20,7 +20,7 @@ export default function AuthGate({ onClose }) {
         queryParams: {
           hd: "stanford.edu", // restricts Google picker to Stanford accounts
         },
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}`,
       },
     });
 
