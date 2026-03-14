@@ -78,7 +78,7 @@ export default function AuthGate({ onClose }) {
         {status === "sent" || status === "verifying" ? (
           <>
             <p className="auth-gate-subtitle">
-              Enter the 6-digit code sent to <strong>{email}</strong>
+              Enter the code sent to <strong>{email}</strong>
             </p>
             <form onSubmit={handleVerifyCode}>
               <input
@@ -86,7 +86,7 @@ export default function AuthGate({ onClose }) {
                 type="text"
                 inputMode="numeric"
                 placeholder="000000"
-                maxLength={6}
+                maxLength={8}
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                 autoFocus
@@ -95,7 +95,7 @@ export default function AuthGate({ onClose }) {
               <button
                 className="auth-gate-btn"
                 type="submit"
-                disabled={otp.length < 6 || status === "verifying"}
+                disabled={otp.length < 6 || otp.length > 8 || status === "verifying"}
               >
                 {status === "verifying" ? "Verifying..." : "Verify Code"}
               </button>
