@@ -10,6 +10,15 @@ export default function Header() {
       <div className="header-left">
         <span className="header-title">RideStork</span>
       </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdELR8bYWpsdZwg3jUEDd9pExjprrj6KJCgZkd1AVIKesUInw/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ fontSize: 13, color: "var(--ink-faint)", textDecoration: "none", fontWeight: 500 }}
+        >
+          Feedback
+        </a>
       {user ? (
         <div
           className="header-avatar"
@@ -26,6 +35,7 @@ export default function Header() {
           Log in
         </button>
       )}
+      </div>
     </div>
   );
 }
