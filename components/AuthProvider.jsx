@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import AuthGate from "./AuthGate";
 
@@ -20,6 +20,7 @@ export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [authGateVisible, setAuthGateVisible] = useState(false);
   const [authGateCallback, setAuthGateCallback] = useState(null);
+  const authGateRef = useRef({ visible: false, callback: null });
   const supabase = createClient();
 
   useEffect(() => {
@@ -63,10 +64,11 @@ export default function AuthProvider({ children }) {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if (session?.user && authGateVisible) {
+      if (session?.user && authGateRef.current.visible) {
         setAuthGateVisible(false);
-        authGateCallback?.();
+        authGateRef.current.callback?.();
         setAuthGateCallback(null);
+        authGateRef.current = { visible: false, callback: null };
       }
     });
 
@@ -80,6 +82,7 @@ export default function AuthProvider({ children }) {
     }
     setAuthGateCallback(() => onSuccess);
     setAuthGateVisible(true);
+    authGateRef.current = { visible: true, callback: onSuccess };
   }, [user]);
 
   const signOut = useCallback(async () => {
