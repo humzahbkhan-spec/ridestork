@@ -33,7 +33,8 @@ export async function GET() {
       id, status, created_at,
       rides:ride_id (
         id, airport_code, pickup_area, departure_at, flex_window_minutes,
-        seats_total, bags, status, contact_phone
+        seats_total, bags, status, contact_phone,
+        profiles:poster_id ( display_name, avatar_initials )
       )
     `)
     .eq("requester_id", user.id)

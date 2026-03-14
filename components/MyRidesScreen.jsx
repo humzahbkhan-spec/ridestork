@@ -191,9 +191,18 @@ function PostedRideCard({ ride, onUpdate }) {
 function RequestedRideCard({ req }) {
   const ride = req.rides;
   if (!ride) return null;
+  const poster = ride.profiles;
 
   return (
     <div className="ride-card" style={{ cursor: "default" }}>
+      {poster && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+          <div className="ride-avatar" style={{ width: 32, height: 32, fontSize: 11 }}>
+            {poster.avatar_initials || "??"}
+          </div>
+          <div style={{ fontWeight: 600, fontSize: 14 }}>{poster.display_name || "Anonymous"}</div>
+        </div>
+      )}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
         <div>
           <div style={{ fontWeight: 700, fontSize: 16 }}>
