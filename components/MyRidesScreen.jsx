@@ -136,7 +136,7 @@ function PostedRideCard({ ride, onUpdate }) {
         <button
           onClick={() => setExpanded(!expanded)}
           style={{
-            background: "none", border: "none", cursor: "pointer",
+            display: "block", background: "none", border: "none", cursor: "pointer",
             fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 600,
             color: pendingCount > 0 ? "var(--accent)" : "var(--ink-soft)",
             padding: 0,
