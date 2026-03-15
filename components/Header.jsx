@@ -25,7 +25,9 @@ export default function Header() {
           onClick={signOut}
           title="Sign out"
         >
-          {user.email?.slice(0, 2).toUpperCase() || "ME"}
+          {user.user_metadata?.full_name
+            ? user.user_metadata.full_name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
+            : user.email?.slice(0, 2).toUpperCase()}
         </div>
       ) : (
         <button

@@ -59,15 +59,19 @@ export async function POST(request) {
   }
 
   // Ensure profile exists (handles trigger failures / OAuth edge cases)
+  const fullName = user.user_metadata?.full_name || user.user_metadata?.name || "";
+  const firstName = fullName ? fullName.split(" ")[0] : user.email.split("@")[0];
+  const initials = firstName.slice(0, 2).toUpperCase();
+
   await supabase.from("profiles").upsert(
     {
       id: user.id,
       email: user.email,
-      display_name: user.email.split("@")[0],
-      avatar_initials: user.email.slice(0, 2).toUpperCase(),
+      display_name: firstName,
+      avatar_initials: initials,
       university: user.email.split("@")[1],
     },
-    { onConflict: "id", ignoreDuplicates: true }
+    { onConflict: "id" }
   );
 
   // Check max active rides per user
